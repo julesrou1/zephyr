@@ -1,0 +1,94 @@
+/*
+ * Copyright (c) 2023-2024 Analog Devices, Inc.
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/dts-v1/;
+
+#include <adi/max32/max32690.dtsi>
+#include <adi/max32/max32690-pinctrl.dtsi>
+#include <zephyr/dt-bindings/gpio/adi-max32-gpio.h>
+
+/ {
+	model = "Analog Devices EVAL_ADIN2111D1Z";
+	compatible = "adi,eval-adin2111d1z";
+
+	chosen {
+		zephyr,console = &uart0;
+		zephyr,shell-uart = &uart0;
+		zephyr,sram = &sram0;
+		zephyr,flash = &flash0;
+	};
+
+	leds {
+		compatible = "gpio-leds";
+		orange_led: led_0 {
+			gpios = <&gpio0 9 GPIO_ACTIVE_LOW>;
+			label = "LED0";
+		};
+		green_led: led_1 {
+			gpios = <&gpio0 14 GPIO_ACTIVE_LOW>;
+			label = "LED1";
+		};
+		red_led: led_2 {
+			gpios = <&gpio1 7 GPIO_ACTIVE_LOW>;
+			label = "LED2";
+		};
+	};
+
+	buttons {
+		compatible = "gpio-keys";
+		pb0: pb0 {
+			gpios = <&gpio4 0 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
+			label = "SW2";
+		};
+	};
+
+	aliases {
+		led0 = &orange_led;
+		led1 = &green_led;
+		led2 = &red_led;
+		sw0 = &pb0;
+	 };
+};
+
+// &clk_ipo {
+// 	status = "okay";
+// };
+
+// &clk_ibro {
+// 	status = "okay";
+// };
+
+&gpio0 {
+	status = "okay";
+};
+
+&gpio1 {
+	status = "okay";
+};
+
+&gpio2 {
+	status = "okay";
+};
+
+&gpio3 {
+	status = "okay";
+};
+
+&gpio4 {
+	status = "okay";
+};
+
+// &uart0 { /*USB-C P4*/
+// 	clock-source = <ADI_MAX32_PRPH_CLK_SRC_IBRO>;
+// 	pinctrl-0 = <&uart0a_tx_p2_12 &uart0a_rx_p2_11>;
+// 	pinctrl-names = "default";
+// 	current-speed = <115200>;
+// 	data-bits = <8>;
+// 	parity = "none";
+// 	status = "okay";
+// };
+/*Support for PMOD SPI UART I2C to add*/
+/*Support for JTAG*/
