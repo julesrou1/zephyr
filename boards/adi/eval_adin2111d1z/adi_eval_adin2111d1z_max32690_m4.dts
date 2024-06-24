@@ -53,13 +53,13 @@
 	 };
 };
 
-// &clk_ipo {
-// 	status = "okay";
-// };
+&clk_ipo {
+	status = "okay";
+};
 
-// &clk_ibro {
-// 	status = "okay";
-// };
+&clk_ibro {
+	status = "okay";
+};
 
 &gpio0 {
 	status = "okay";
@@ -81,14 +81,55 @@
 	status = "okay";
 };
 
-// &uart0 { /*USB-C P4*/
-// 	clock-source = <ADI_MAX32_PRPH_CLK_SRC_IBRO>;
-// 	pinctrl-0 = <&uart0a_tx_p2_12 &uart0a_rx_p2_11>;
-// 	pinctrl-names = "default";
-// 	current-speed = <115200>;
-// 	data-bits = <8>;
-// 	parity = "none";
-// 	status = "okay";
-// };
+&uart0 { /*USB-C P4*/
+	clock-source = <ADI_MAX32_PRPH_CLK_SRC_IBRO>;
+	pinctrl-0 = <&uart0a_tx_p2_12 &uart0a_rx_p2_11>;
+	pinctrl-names = "default";
+	current-speed = <115200>;
+	data-bits = <8>;
+	parity = "none";
+	status = "okay";
+};
 /*Support for PMOD SPI UART I2C to add*/
 /*Support for JTAG*/
+
+&spi0 {
+	pinctrl-0 = <&spi0b_miso_p2_27 &spi0b_mosi_p2_28 &spi0b_sck_p2_29
+		     &spi0b_ss1_p2_26>;
+	pinctrl-names = "default";
+	status = "okay";
+
+	adin2111: adin2111@0 {
+		compatible = "adi,adin2111";
+		reg = <0x0>;
+		spi-max-frequency = <25000000>;
+		int-gpios = <&gpio2 25 GPIO_ACTIVE_LOW>;
+		status = "okay";
+		spi-oa;
+		spi-oa-protection;
+
+		port1 {
+			local-mac-address = [ 00 E0 22 FE DA C9 ];
+		};
+		port2 {
+			local-mac-address = [ 00 E0 22 FE DA D9 ];
+		};
+		mdio {
+			compatible = "adi,adin2111-mdio";
+			#address-cells = <1>;
+			#size-cells = <0>;
+			status = "okay";
+
+			ethernet-phy@1 {
+				reg = <0x1>;
+				compatible = "adi,adin2111-phy";
+				status = "okay";
+			};
+			ethernet-phy@2 {
+				reg = <0x2>;
+				compatible = "adi,adin2111-phy";
+				status = "okay";
+			};
+		};
+	};
+};
