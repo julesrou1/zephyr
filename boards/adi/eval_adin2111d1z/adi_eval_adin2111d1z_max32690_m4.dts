@@ -111,9 +111,9 @@
 };
 
 &spi0 {
-	pinctrl-0 = <&spi0b_miso_p2_27 &spi0b_mosi_p2_28 &spi0b_sck_p2_29 &spi0b_ss1_p2_26>;
+	pinctrl-0 = <&spi0b_miso_p2_27 &spi0b_mosi_p2_28 &spi0b_sck_p2_29>;
 	pinctrl-names = "default";
-	// cs-gpios = <&spi0b_ss1_p2_26 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+	cs-gpios = <&gpio2 26 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
 	status = "okay";
 
 	adin2111: adin2111@0 {
