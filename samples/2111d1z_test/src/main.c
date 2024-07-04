@@ -7,14 +7,14 @@
 #include <stdio.h>
 #include <zephyr/kernel.h>
 #include <zephyr/drivers/gpio.h>
+#include <zephyr/drivers/spi.h>
 #include "led_test.c"
-
-
+#include "spi_test.c"
 
 int main(void)
 {
-	led_test_main();
+	// led_test_main();
+	spi_test_main();
 
-	
 	return 0;
 }
