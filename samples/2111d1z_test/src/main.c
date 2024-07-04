@@ -4,17 +4,14 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include <stdio.h>
-#include <zephyr/kernel.h>
-#include <zephyr/drivers/gpio.h>
-#include <zephyr/drivers/spi.h>
-#include "led_test.c"
-#include "spi_test.c"
-
+#include "functions.h"
 int main(void)
 {
-	// led_test_main();
-	spi_test_main();
+	if(!spi_test_main()){
+		return 0;
+	}
 
-	return 0;
+	led_test_main();
+
+	return 1;
 }

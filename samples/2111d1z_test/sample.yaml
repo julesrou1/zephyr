@@ -1,7 +1,6 @@
 sample:
-  description: Hello World sample, the simplest Zephyr
-    application
-  name: hello world
+  description: ADIN2111D1Z testing script
+  name: ADIN2111D1Z_test
 common:
   tags: introduction
   integration_platforms:
@@ -9,8 +8,6 @@ common:
   harness: console
   harness_config:
     type: one_line
-    regex:
-      - "Hello World! (.*)"
 tests:
-  sample.basic.helloworld:
+  sample.2111d1z_test:
     tags: introduction
