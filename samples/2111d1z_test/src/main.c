@@ -7,11 +7,11 @@
 #include "functions.h"
 int main(void)
 {
-	if(!spi_test_main()){
+	if(!spi_example()){
 		return 0;
 	}
 
-	led_test_main();
+	led_example();
 
 	return 1;
 }

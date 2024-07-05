@@ -19,6 +19,6 @@
 /* Defining the operation mode for SPI ADIN2111*/
 #define SPI_OP SPI_OP_MODE_MASTER | SPI_MODE_CPOL | SPI_MODE_CPHA | SPI_WORD_SET(8) | SPI_LINES_SINGLE
 
-int led_test_main(void);
+int led_example(void);
 
-int spi_test_main(void);
+int spi_example(void);

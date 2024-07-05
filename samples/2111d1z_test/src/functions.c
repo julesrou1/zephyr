@@ -5,13 +5,13 @@ static const struct gpio_dt_spec led1 = GPIO_DT_SPEC_GET(LED1_NODE, gpios);
 static const struct gpio_dt_spec led2 = GPIO_DT_SPEC_GET(LED2_NODE, gpios);
 
 
-int led_test_main(){
+int led_example(){
 	int ret0,ret1,ret2;
 	bool led_state = true;
 	if (!gpio_is_ready_dt(&led0) || !gpio_is_ready_dt(&led1) || !gpio_is_ready_dt(&led2)) {
 		return 0;
 	}
-	
+
 	ret0 = gpio_pin_configure_dt(&led0, GPIO_OUTPUT_ACTIVE);
 	ret1 = gpio_pin_configure_dt(&led1, GPIO_OUTPUT_ACTIVE);
 	ret2 = gpio_pin_configure_dt(&led2, GPIO_OUTPUT_ACTIVE);
@@ -37,12 +37,19 @@ int led_test_main(){
 
 }
 
-uint8_t my_buff[4]={0};
-struct spi_buf my_spi_buf={.buf = my_buff, .len = 4 * 8};
-const struct spi_buf_set rx_buff = {&my_spi_buf, 1};
-int ret;
 
-int spi_test_main(){
+uint32_t tx_buf=0x0001U;
+uint32_t rx_buf;
+struct spi_buf tx_spi_buf={.buf = (void *)&tx_buf, .len = 1};
+const struct spi_buf_set tx_buff_set = {.buffers=&tx_spi_buf, .count=1};
+
+struct spi_buf rx_spi_buf={.buf = (void *)&rx_buf, .len = 1};
+const struct spi_buf_set rx_buff_set = {.buffers=&rx_spi_buf, .count=1};
+
+
+int err;
+
+int spi_example(){
     // Get the device information from the device tree
     const struct device *const dev = DEVICE_DT_GET(SPI_ADIN2111);
 
@@ -55,11 +62,21 @@ int spi_test_main(){
 
     // Get the SPI configuration from the devices tree and store the config in spi0
     static const struct spi_dt_spec spi0 = SPI_DT_SPEC_GET(SPI_ADIN2111,SPI_OP,0);
-    // As an example the frequency for the spi bus is printed the value match the device tree
+
+    // As an example the frequency for the spi bus is printed
     printf("%d\n", spi0.config.frequency);
 
-    // Now I am trying to read the phy adress still working on that.
-    // ret = spi_read(dev,&spi0.config,&rx_buff);
+    // Example of transmition : 
+	// (Not sure what to enter in tx at this stage.) the transceive is working but the rx_buf is null
+
+	err = spi_transceive_dt(&spi0,&tx_buff_set,&rx_buff_set);
+
+	if (err<0){
+		printf("spi_transceive_dt() failed, err: %d\n",err);
+		return err;
+	}	
+
+	printf("Read from SPI PHY ID REG : %d \n",rx_buf);
 
     return 1;
 }
