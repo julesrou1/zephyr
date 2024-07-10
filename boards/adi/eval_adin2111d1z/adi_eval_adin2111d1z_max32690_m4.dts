@@ -22,14 +22,20 @@
 		zephyr,flash = &flash0;
 	};
 
+
 	leds {
 		compatible = "gpio-leds";
+
+		bypass_relay: bypass_relay_uc {
+			gpios = <&gpio1 8 (GPIO_ACTIVE_HIGH)>;
+			label = "bypassuc";
+		};
 		orange_led: led_0 {
-			gpios = <&gpio0 9 GPIO_ACTIVE_LOW>;
+			gpios = <&gpio0 9 (GPIO_ACTIVE_LOW)>;
 			label = "LED0";
 		};
 		green_led: led_1 {
-			gpios = <&gpio0 14 GPIO_ACTIVE_LOW>;
+			gpios = <&gpio0 14 (GPIO_ACTIVE_LOW) >;
 			label = "LED1";
 		};
 		red_led: led_2 {
@@ -47,6 +53,7 @@
 	};
 
 	aliases {
+		bypassuc = &bypass_relay;
 		led0 = &orange_led;
 		led1 = &green_led;
 		led2 = &red_led;
@@ -65,7 +72,7 @@
 	status = "okay";
 };
 
-&gpio1 {
+&gpio1 {	
 	status = "okay";
 };
 
@@ -80,6 +87,8 @@
 &gpio4 {
 	status = "okay";
 };
+
+
 
 &uart0 { /*USB-C P4*/
 	clock-source = <ADI_MAX32_PRPH_CLK_SRC_IBRO>;

@@ -4,7 +4,6 @@ static const struct gpio_dt_spec led0 = GPIO_DT_SPEC_GET(LED0_NODE, gpios);
 static const struct gpio_dt_spec led1 = GPIO_DT_SPEC_GET(LED1_NODE, gpios);
 static const struct gpio_dt_spec led2 = GPIO_DT_SPEC_GET(LED2_NODE, gpios);
 
-
 int led_example(){
 	int ret0,ret1,ret2;
 	bool led_state = true;
@@ -48,8 +47,24 @@ const struct spi_buf_set rx_buff_set = {.buffers=&rx_spi_buf, .count=1};
 
 
 int err;
+int gpio_state;
+#define BYPASS_NODE DT_ALIAS(bypassuc)
+
+static const struct gpio_dt_spec bypass_pin = GPIO_DT_SPEC_GET(BYPASS_NODE, gpios);
 
 int spi_example(){
+
+	if (!gpio_is_ready_dt(&bypass_pin)) {
+		printf("Bypass is pin not ready.\n");
+		return 0;
+	}
+
+	if (gpio_pin_configure_dt(&bypass_pin, GPIO_OUTPUT_HIGH) < 0) {
+		printf("Fail to set Bypass pin high.\n");
+		return 0;
+	}
+	printf("Bypass relay pin is HIGH\n");
+
     // Get the device information from the device tree
     const struct device *const dev = DEVICE_DT_GET(SPI_ADIN2111);
 
