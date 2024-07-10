@@ -14,6 +14,8 @@
 #define LED1_NODE DT_ALIAS(led1)
 #define LED2_NODE DT_ALIAS(led2)
 
+/* The devicetree node identifier for the bypass_relay pin "bypassuc". */
+#define BYPASS_NODE DT_ALIAS(bypassuc)
 /* The devicetree node identifier for the spi "adin2111". */
 #define SPI_ADIN2111 DT_NODELABEL(adin2111)
 /* Defining the operation mode for SPI ADIN2111*/
