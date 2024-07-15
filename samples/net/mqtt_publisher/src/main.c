@@ -15,6 +15,11 @@ LOG_MODULE_REGISTER(net_mqtt_publisher_sample, LOG_LEVEL_DBG);
 #include <string.h>
 #include <errno.h>
 
+#include <zephyr/device.h>
+#include <zephyr/devicetree.h>
+#include <zephyr/drivers/gpio.h>
+#include <zephyr/drivers/spi.h>
+
 #include "config.h"
 
 #if defined(CONFIG_USERSPACE)
@@ -104,6 +109,12 @@ static int tls_init(void)
 }
 
 #endif /* CONFIG_MQTT_LIB_TLS */
+
+void gpio_bypass_set(void){
+	static const struct gpio_dt_spec bypass_pin = GPIO_DT_SPEC_GET(DT_ALIAS(bypassuc), gpios);
+	gpio_pin_configure_dt(&bypass_pin, GPIO_OUTPUT_HIGH);
+
+}
 
 static void prepare_fds(struct mqtt_client *client)
 {
@@ -516,6 +527,7 @@ static K_HEAP_DEFINE(app_mem_pool, 1024 * 2);
 
 int main(void)
 {
+gpio_bypass_set();
 #if defined(CONFIG_MQTT_LIB_TLS)
 	int rc;
 

@@ -20,6 +20,11 @@ LOG_MODULE_REGISTER(net_dhcpv4_client_sample, LOG_LEVEL_DBG);
 #include <zephyr/net/net_context.h>
 #include <zephyr/net/net_mgmt.h>
 
+#include <zephyr/device.h>
+#include <zephyr/devicetree.h>
+#include <zephyr/drivers/gpio.h>
+#include <zephyr/drivers/spi.h>
+
 #define DHCP_OPTION_NTP (42)
 
 static uint8_t ntp_server[4];
@@ -83,8 +88,15 @@ static void option_handler(struct net_dhcpv4_option_callback *cb,
 		net_addr_ntop(AF_INET, cb->data, buf, sizeof(buf)));
 }
 
+void gpio_bypass_set(void){
+	static const struct gpio_dt_spec bypass_pin = GPIO_DT_SPEC_GET(DT_ALIAS(bypassuc), gpios);
+	gpio_pin_configure_dt(&bypass_pin, GPIO_OUTPUT_HIGH);
+
+}
+
 int main(void)
 {
+	gpio_bypass_set();
 	LOG_INF("Run dhcpv4 client");
 
 	net_mgmt_init_event_callback(&mgmt_cb, handler,

@@ -8,6 +8,11 @@
 #include <stdlib.h>
 #include <errno.h>
 
+#include <zephyr/device.h>
+#include <zephyr/devicetree.h>
+#include <zephyr/drivers/gpio.h>
+#include <zephyr/drivers/spi.h>
+
 #if !defined(__ZEPHYR__) || defined(CONFIG_POSIX_API)
 
 #include <netinet/in.h>
@@ -27,7 +32,7 @@
 #define BIND_PORT 8080
 
 #ifndef USE_BIG_PAYLOAD
-#define USE_BIG_PAYLOAD 1
+#define USE_BIG_PAYLOAD 0
 #endif
 
 #define CHECK(r) { if (r == -1) { printf("Error: " #r "\n"); exit(1); } }
@@ -55,13 +60,19 @@ static void sleep_after_error(unsigned int amount)
 #endif
 }
 
+void gpio_bypass_set(void){
+	static const struct gpio_dt_spec bypass_pin = GPIO_DT_SPEC_GET(DT_ALIAS(bypassuc), gpios);
+	gpio_pin_configure_dt(&bypass_pin, GPIO_OUTPUT_HIGH);
+
+}
+
 int main(void)
 {
 	int serv;
 	struct sockaddr_in bind_addr;
 	static int counter;
 	int ret;
-
+	gpio_bypass_set();
 	serv = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 	CHECK(serv);
 
