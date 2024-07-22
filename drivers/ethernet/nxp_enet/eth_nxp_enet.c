@@ -84,7 +84,7 @@ struct nxp_enet_mac_config {
 	clock_control_subsys_t clock_subsys;
 	enum mac_address_source mac_addr_source;
 	const struct pinctrl_dev_config *pincfg;
-	enet_buffer_config_t buffer_config;
+	enet_buffer_config_t buffer_config[1];
 	uint8_t phy_mode;
 	void (*irq_config_func)(void);
 	const struct device *phy_dev;
@@ -264,6 +264,8 @@ static void eth_nxp_enet_iface_init(struct net_if *iface)
 	net_eth_carrier_off(data->iface);
 
 	config->irq_config_func();
+
+	nxp_enet_driver_cb(config->mdio, NXP_ENET_MDIO, NXP_ENET_INTERRUPT_ENABLED, NULL);
 }
 
 static enum ethernet_hw_caps eth_nxp_enet_get_capabilities(const struct device *dev)
@@ -737,7 +739,7 @@ static int eth_nxp_enet_init(const struct device *dev)
 	ENET_Up(data->base,
 		  &data->enet_handle,
 		  &enet_config,
-		  &config->buffer_config,
+		  config->buffer_config,
 		  data->mac_addr,
 		  enet_module_clock_rate);
 
@@ -955,7 +957,7 @@ BUILD_ASSERT(NXP_ENET_PHY_MODE(DT_DRV_INST(n)) != NXP_ENET_RGMII_MODE ||		\
 			.clock_subsys = (void *)DT_CLOCKS_CELL_BY_IDX(			\
 						DT_INST_PARENT(n), 0, name),		\
 			.pincfg = PINCTRL_DT_INST_DEV_CONFIG_GET(n),			\
-			.buffer_config = {						\
+			.buffer_config = {{						\
 				.rxBdNumber = CONFIG_ETH_NXP_ENET_RX_BUFFERS,		\
 				.txBdNumber = CONFIG_ETH_NXP_ENET_TX_BUFFERS,		\
 				.rxBuffSizeAlign = ETH_NXP_ENET_BUFFER_SIZE,		\
@@ -967,7 +969,7 @@ BUILD_ASSERT(NXP_ENET_PHY_MODE(DT_DRV_INST(n)) != NXP_ENET_RGMII_MODE ||		\
 				.rxMaintainEnable = driver_cache_maintain,		\
 				.txMaintainEnable = driver_cache_maintain,		\
 				NXP_ENET_FRAMEINFO(n)					\
-			},								\
+			}},								\
 			.phy_mode = NXP_ENET_PHY_MODE(DT_DRV_INST(n)),			\
 			.phy_dev = DEVICE_DT_GET(DT_INST_PHANDLE(n, phy_handle)),	\
 			.mdio = DEVICE_DT_GET(DT_INST_PHANDLE(n, nxp_mdio)),		\
@@ -1010,8 +1012,13 @@ struct nxp_enet_mod_data {
 static int nxp_enet_mod_init(const struct device *dev)
 {
 	const struct nxp_enet_mod_config *config = dev->config;
+	int ret;
 
-	clock_control_on(config->clock_dev, config->clock_subsys);
+	ret = clock_control_on(config->clock_dev, config->clock_subsys);
+	if (ret) {
+		LOG_ERR("ENET module clock error");
+		return ret;
+	}
 
 	DEVICE_MMIO_MAP(dev, K_MEM_CACHE_NONE | K_MEM_DIRECT_MAP);
 
