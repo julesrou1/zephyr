@@ -1,0 +1,206 @@
+*
+{
+ font-family:Tahoma,Verdana,Arial,Helvetica,sans-serif;
+ font-size:12px;
+ color:#000000;
+}
+
+body { background-color:#F0F0F0; }
+ 
+a:link { text-decoration:none; }
+a:visited { text-decoration:none; }
+a:hover { text-decoration:underline; }
+a.highlighted { color:#000080; }
+ 
+ 
+ /* --- Layout Divs ------------------------------------------------------------------------------------------- */
+div.content
+{
+ width:1024px;
+ margin:auto; /* center it */
+ background-color:#FFFFFF;
+ border:1px solid #ABAEBA;
+}
+
+div.min_height_spacer
+{
+ float:left;
+ width:1px;
+ margin:0px;
+ border:0px;
+ padding:0px;
+ height:444px;
+}
+
+div.main { padding: 0px 20px 0px 175px; }
+div.xslt_main { padding: 10px 10px 20px 10px; }
+
+
+/* --- NavMenu ------------------------------------------------------------------------------------------- */
+div.navigation
+{
+ float:left;
+ width:160px; 
+ margin:0px;
+ border:0px;
+ padding:0px;
+ background-image:url(images/navigation_bg.png);
+}
+
+div.navigation > p
+{
+ margin:10px;
+}
+
+div.navigation > img
+{
+ display:block;
+}
+
+
+/* --- HeadLines ------------------------------------------------------------------------------------------- */
+h1
+{
+ text-align:left;
+ font-weight:bold;
+ color:#FFFFFF;
+ background-color:#3399cc;
+ margin: 20px 0px 10px 0px;
+ border-top:3px solid #338dcc;
+ border-bottom:3px solid #338dcc;
+ border-left:1px solid #338dcc;
+ border-right:1px solid #338dcc;
+ padding-left:5px;
+}
+
+h1:first-child
+{
+ margin: 2px 0px 10px 0px;
+}
+
+h2
+{
+ text-align:left;
+ font-weight:normal;
+ color:#FFFFFF;
+ background-color:#3399cc;
+ margin-top: 20px;
+ border-top:3px solid #C2C5CE;
+ border-bottom:3px solid #C2C5CE;
+ border-left:1px solid #C2C5CE;
+ border-right:1px solid #C2C5CE;
+ padding-left:5px;
+}
+
+h3
+{
+ font-weight:bold;
+ margin-top: 20px;
+ margin-bottom: 20px;
+ padding-left:5px;
+}
+
+h4 {
+ text-decoration:none;
+ border:0;
+ width : 278px;
+ height : 105px;
+ margin : 0;
+ padding : 0;
+ background : url("/img/ADIChronous_small.png") no-repeat 0 0;
+}
+
+h5{
+	font-size: xx-large;
+	font-weight:bolder;
+	font-family:arial, helvetica;
+	color:black;
+	line-height:5px;
+	text-align:justify;
+	}
+	
+h7{
+	font-size: large;
+	font-weight:bolder;
+	font-family:arial, helvetica;
+	color:black;
+	line-height:4px;
+	text-align:justify;
+	}	
+h6{
+	text-align:justify;
+	line-height:2px;
+	font-weight:bolder;
+	}
+h4 a {
+ display : block;
+ height : 79px;
+
+}
+
+/* --- Common Table definitions ------------------------------------------------------------------------------------------------- */
+
+table > tbody > tr > td.inactive
+{
+   color: #808080;
+}
+
+table > tbody > tr > td.inactive:hover
+{
+   color: inherit;
+}
+
+table > tbody > tr.inactive > td
+{
+   color: #808080;
+}
+
+table > tbody > tr.inactive > td:hover
+{
+   color: inherit;
+}
+
+
+
+/* --- Table with row separator lines ------------------------------------------------------------------------------------------- */
+
+table.rowlines
+{
+   border: 0;
+   border-collapse: collapse; border-spacing: 0;
+}
+
+table.rowlines > tbody > tr > th
+{
+   font-weight: inherit;
+   text-align: inherit;
+   background-color: #eeeeee;
+}
+
+table.rowlines > tbody > tr > td, table.rowlines > tbody > tr > th
+{
+   padding: 5px;
+}
+
+table.rowlines > tbody > tr:first-child > td
+{
+   border-top: 0px;
+}
+
+table.rowlines > tbody > tr > td
+{
+   border-top: 1px solid #dddddd;
+}
+
+/* --- Table not exceeding parent container bounds ------------------------------------------------------------------------------------------- */
+
+table.safewidth
+{
+   display:block;
+   overflow: hidden;
+}
+
+table.safewidth > tbody > tr > td
+{
+   white-space: nowrap;
+}

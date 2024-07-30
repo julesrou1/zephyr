@@ -1,4 +1,94 @@
-HTTP/1.0 200 OK
-Content-Type: text/plain; charset=utf-8
+<!DOCTYPE html ><head>
+ <title>Analog Devices 10BASE-T1L DEMO - Web Interface</title>
+ <link rel="icon" type="image/x-icon" href="/img/favicon.ico">
+ <META charset="UTF-8">
+ <link rel="stylesheet" type="text/css" href="styles.css" />
+<META HTTP-EQUIV="refresh" CONTENT="5">
+</head>
 
-Testing the ADIN2111D1Z through the ADIN1100 T1L.
+<div class="content">
+<h1>Analog Devices Demo Web Interface</h1>
+<div>
+<table style="width:100%">
+<tr>
+<td style="width:33%;padding-right:30px">
+<h4><a href="http://www.analog.com"
+		border="0" alt="Analog Devices 10BASE-T1L DEMO" title = ></a></h4>
+</td>
+<td style="width:66%;vertical-align:top;">
+	<h5>  ADIN2111</h5>
+	<h7>  10BASE-T1L TWO PORT SWITCH</h7>
+</td>
+</tr>
+</table>
+</div>
+
+
+
+<h1>Ethernet Channels</h1>
+<div>
+	<table style="width:100%">
+		<tr>
+		<td style="width:33%;vertical-align:top;padding-right:33px">
+			<table class="rowlines" style="width:100%">
+			 <!--#Params1-->
+			</table>
+		</td>
+		<td style="width:33%;vertical-align:top;padding-right:33px">
+			<table class="rowlines" style="width:100%">
+			 <!--#Params2-->
+			</table>
+		</td>
+		
+		<td style="width:33%;vertical-align:top;padding-left:33px">
+			 <table class="rowlines" style="width:100%">
+			 <!--#Params3-->
+			 </table>
+		</td>
+		</tr>
+	</table>
+</div>
+
+<h1>Board Information</h1>
+<div>
+	<table style="width:100%">
+		<tr>
+			<td style="width:33%;vertical-align:top;padding-right:33px">
+				 <table class="rowlines" style="width:100%">
+				 <!--#Params4-->
+				 </table>
+			</td>
+			<td style="width:33%;vertical-align:top;padding-left:33px">
+				<table class="rowlines" style="width:100%">
+				<!--#Params5-->
+				</table>
+			</td>
+			<td style="width:33%;vertical-align:top;padding-left:33px">
+				<table class="rowlines" style="width:100%">
+				<!--#Params6-->
+				</table>
+			</td>
+		</tr>
+</table>
+</div>
+<h1></h1>
+<div>
+<table style="width:100%">
+<tr>
+
+<td style="width:50%;vertical-align:top;padding-right:30px">
+	<a href="http://www.analog.com">   (c) 2021 Analog Devices, Inc.<br />  All Rights Reserved</a>
+</td>
+</td>
+<td style="width:50%;vertical-align:top;padding-left:30px">
+	<a href="https://savannah.nongnu.org/projects/lwip/">Powered by lwIP (c) 2001-2004 Swedish Institute of Computer Science.<br /> All rights reserved</a>.
+</td>
+</tr>
+</table>
+</div>
+</div>
+
+
+
+</body>
+</html>

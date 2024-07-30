@@ -11,7 +11,7 @@ int main(void)
 		return 0;
 	}
 
-	led_example();
+	// led_example();
 
 	return 1;
 }
