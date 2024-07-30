@@ -185,7 +185,7 @@ static struct bt_att_tx_meta_data tx_meta_data_storage[CONFIG_BT_ATT_TX_COUNT];
 struct bt_att_tx_meta_data *bt_att_get_tx_meta_data(const struct net_buf *buf);
 static void att_on_sent_cb(struct bt_att_tx_meta_data *meta);
 
-
+#if defined(CONFIG_BT_ATT_ERR_TO_STR)
 const char *bt_att_err_to_str(uint8_t att_err)
 {
 	/* To mapping tables are used to avoid a big gap with NULL-entries. */
@@ -239,6 +239,7 @@ const char *bt_att_err_to_str(uint8_t att_err)
 	#undef ATT_ERR
 	#undef ATT_ERR_SECOND
 }
+#endif /* CONFIG_BT_ATT_ERR_TO_STR */
 
 static void att_tx_destroy(struct net_buf *buf)
 {
@@ -2325,7 +2326,7 @@ static uint8_t att_exec_write_rsp(struct bt_att_chan *chan, uint8_t flags)
 
 	/* The following code will iterate on all prepare writes in the
 	 * prep_queue, and reassemble those that share the same handle.
-	 * Once a handle has been ressembled, it is sent to the upper layers,
+	 * Once a handle has been reassembled, it is sent to the upper layers,
 	 * and the next handle is processed
 	 */
 	while (!sys_slist_is_empty(&chan->att->prep_queue)) {
@@ -3498,7 +3499,7 @@ static k_timeout_t credit_based_connection_delay(struct bt_conn *conn)
 		}
 
 		const uint8_t rand_delay = random & 0x7; /* Small random delay for IOP */
-		/* The maximum value of (latency + 1) * 2 multipled with the
+		/* The maximum value of (latency + 1) * 2 multiplied with the
 		 * maximum connection interval has a maximum value of
 		 * 4000000000 which can be stored in 32-bits, so this won't
 		 * result in an overflow

@@ -1229,7 +1229,7 @@ int lwm2m_write_handler(struct lwm2m_engine_obj_inst *obj_inst, struct lwm2m_eng
 
 			if (len > data_len) {
 				LOG_ERR("Received data won't fit into provided "
-					"bufffer");
+					"buffer");
 				return -ENOMEM;
 			}
 
@@ -1749,7 +1749,7 @@ int lwm2m_perform_read_op(struct lwm2m_message *msg, uint16_t content_format)
 	if (msg->path.level >= LWM2M_PATH_LEVEL_OBJECT_INST) {
 		obj_inst = get_engine_obj_inst(msg->path.obj_id, msg->path.obj_inst_id);
 		if (!obj_inst) {
-			/* When Object instace is indicated error have to be reported */
+			/* When Object instance is indicated error have to be reported */
 			return -ENOENT;
 		}
 	} else if (msg->path.level == LWM2M_PATH_LEVEL_OBJECT) {
@@ -2086,7 +2086,7 @@ static int parse_write_op(struct lwm2m_message *msg, uint16_t format)
 			LOG_WRN("Block already handled %d, expected %d", block_num,
 				block_ctx->expected);
 			(void)coap_header_set_code(msg->out.out_cpkt, COAP_RESPONSE_CODE_CONTINUE);
-			/* Respond with the original Block1 header, original Ack migh have been
+			/* Respond with the original Block1 header, original Ack might have been
 			 * lost, and this is a retry. We don't know the original response, but
 			 * since it is handled, just assume we can continue.
 			 */
@@ -2107,13 +2107,7 @@ static int parse_write_op(struct lwm2m_message *msg, uint16_t format)
 		}
 
 		block_ctx->last_block = last_block;
-
-		/* Initial block sent by the server might be larger or smaller than
-		 * our block size, therefore it is needed to take this into account
-		 * when calculating next expected block number.
-		 */
-		block_ctx->expected +=
-			1 << MAX(0, GET_BLOCK_SIZE(block_opt) - block_ctx->ctx.block_size);
+		block_ctx->expected++;
 	}
 
 	r = do_write_op(msg, format);
@@ -3113,7 +3107,7 @@ msg_init:
 	if (ret < 0) {
 		if (lwm2m_timeseries_data_rebuild(msg, ret)) {
 			/* Message Build fail by ENOMEM and data include timeseries data.
-			 * Try rebuild message again by limiting timeseries data entry lenghts.
+			 * Try rebuild message again by limiting timeseries data entry lengths.
 			 */
 			goto msg_init;
 		}
@@ -3432,7 +3426,7 @@ static bool init_next_pending_timeseries_data(struct lwm2m_cache_read_info *cach
 	/* Check do we have still pending data to send */
 	for (int i = 0; i < cache_temp->entry_size; i++) {
 		if (ring_buf_is_empty(&cache_temp->read_info[i].cache_data->rb)) {
-			/* Skip Emtpy cached buffers */
+			/* Skip Empty cached buffers */
 			continue;
 		}
 
@@ -3564,7 +3558,7 @@ msg_init:
 	if (ret < 0) {
 		if (lwm2m_timeseries_data_rebuild(msg, ret)) {
 			/* Message Build fail by ENOMEM and data include timeseries data.
-			 * Try rebuild message again by limiting timeseries data entry lenghts.
+			 * Try rebuild message again by limiting timeseries data entry lengths.
 			 */
 			goto msg_init;
 		}

@@ -413,6 +413,8 @@ struct bt_gatt_cpf {
  * See also the defined BT_ATT_ERR_* macros.
  *
  * @return The string representation of the GATT error code.
+ *         If @kconfig{CONFIG_BT_ATT_ERR_TO_STR} is not enabled,
+ *         this just returns the empty string.
  */
 static inline const char *bt_gatt_err_to_str(int gatt_err)
 {
@@ -1906,8 +1908,6 @@ struct bt_gatt_subscribe_params {
 	 */
 	bt_gatt_subscribe_func_t subscribe;
 
-	/** @deprecated{subscribe CCC write response callback} */
-	bt_gatt_write_func_t write;
 	/** Subscribe value handle */
 	uint16_t value_handle;
 	/** Subscribe CCC handle */
@@ -2009,7 +2009,8 @@ int bt_gatt_resubscribe(uint8_t id, const bt_addr_le_t *peer,
  *  called from the BT RX thread, as this would cause a deadlock.
  *
  *  @param conn Connection object.
- *  @param params Subscribe parameters.
+ *  @param params Subscribe parameters. The parameters shall be a @ref bt_gatt_subscribe_params from
+ *                a previous call to bt_gatt_subscribe().
  *
  *  @retval 0 Successfully queued request. Will call @p params->write on
  *  resolution.
