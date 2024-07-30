@@ -88,7 +88,30 @@
 	status = "okay";
 };
 
+// &i2c1 {
+// 	pinctrl-0 = <&i2c1_scl_pg14 &i2c1_sda_pg13>;
+// 	pinctrl-names = "default";
+// 	status = "okay";
+	// clock-frequency = <I2C_BITRATE_FAST>;
+// };
+// 
+// &i2c3 {
+	// pinctrl-0 = <&i2c3_scl_pg7 &i2c3_sda_pg8>;
+	// pinctrl-names = "default";
+	// status = "okay";
+	// clock-frequency = <I2C_BITRATE_FAST>;
+// 
+	// adt7420: adt7420@48 {
+		// compatible = "adi,adt7420";
+		// reg = <0x48>;
+	// };
+// };
 
+&i2c0 {
+	pinctrl-0 = <&i2c0a_sda_p2_7 &i2c0a_scl_p2_8>; 
+	pinctrl-names = "default";
+	status = "okay";
+};
 
 &uart0 { /*USB-C P4*/
 	clock-source = <ADI_MAX32_PRPH_CLK_SRC_IBRO>;
